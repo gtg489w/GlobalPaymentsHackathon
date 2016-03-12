@@ -32,42 +32,28 @@ angular.module('starter.controllers', [])
 
 
 	/******************************************************
-		Bluetooth
+		GPS
 	******************************************************/
 	$ionicPlatform.ready(function () {
 
-		var type = $cordovaNetwork.getNetwork();
-	    var isOnline = $cordovaNetwork.isOnline();
-	    var isOffline = $cordovaNetwork.isOffline();
+		// move this to the mobile app
 
-	    window.alert(type);
-	    window.alert(isOffline);
-	    window.alert(isOnline);
+		// var watchOptions = {
+		// 	timeout : 3000,
+		// 	enableHighAccuracy: false
+		// };
 
-
-		//window.alert($window.ble.scan);
-		
-		// $window.ble.startScan([], function(device) {
-		// 	$scope.$apply(function () {
-		// 		$scope.state.devices[device.id] = device;
+		// var watch = $cordovaGeolocation.watchPosition(watchOptions);
+		// watch.then(
+		// 	null,
+		// 	function(err) {
+		// 		// error
+		// 	},
+		// 	function(position) {
+		// 		var lat  = position.coords.latitude;
+		// 		var lng = position.coords.longitude;
+		// 		window.alert(lat + ', ' + lng);
 		// 	});
-		// 	if(device && device.advertising && device.advertising.kCBAdvDataServiceUUIDs) {
-		// 		device.advertising.kCBAdvDataServiceUUIDs.forEach(function(uuid) {
-		// 			//window.alert(uuid + ' != ' + config.deviceUUID);
-
-		// 			// window.alert(uuid.substring(uuid.length-config.deviceID.length) + "\n" + config.deviceID);
-
-		// 			if(uuid.substring(uuid.length-config.deviceID.length) == config.deviceID) {
-		// 				// window.alert(device.rssi);
-		// 				$scope.$apply(function () {
-		// 					$scope.state.distance = device.rssi;
-		// 				});
-		// 			}
-		// 		});
-		// 	}
-		// }, function() {
-		// 	window.alert('fail!');
-		// });
 	});
 
 
