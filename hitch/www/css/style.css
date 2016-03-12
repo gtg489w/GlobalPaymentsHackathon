@@ -1,1 +1,5 @@
-/* Empty. Add your own CSS if you like */
+.pane {
+	background: #24252a;
+	background: linear-gradient(135deg,  #24252a 0%,#283647 100%);
+	color: #fff;
+}
