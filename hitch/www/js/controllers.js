@@ -33,27 +33,40 @@ angular.module('starter.controllers', [])
 	/******************************************************
 		GPS
 	******************************************************/
-	$ionicPlatform.ready(function () {
 
-		// move this to the mobile app
+	// move this to the mobile app
 
-		// var watchOptions = {
-		// 	timeout : 3000,
-		// 	enableHighAccuracy: false
-		// };
+	// var watchOptions = {
+	// 	timeout : 3000,
+	// 	enableHighAccuracy: false
+	// };
 
-		// var watch = $cordovaGeolocation.watchPosition(watchOptions);
-		// watch.then(
-		// 	null,
-		// 	function(err) {
-		// 		// error
-		// 	},
-		// 	function(position) {
-		// 		var lat  = position.coords.latitude;
-		// 		var lng = position.coords.longitude;
-		// 		window.alert(lat + ', ' + lng);
-		// 	});
-	});
+	// var watch = $cordovaGeolocation.watchPosition(watchOptions);
+	// watch.then(
+	// 	null,
+	// 	function(err) {
+	// 		// error
+	// 	},
+	// 	function(position) {
+	// 		var lat  = position.coords.latitude;
+	// 		var lng = position.coords.longitude;
+	// 		window.alert(lat + ', ' + lng);
+	// 	});
+
+
+	/******************************************************
+		Scope actions
+	******************************************************/
+	$scope.checkout = function() {
+		$scope.state.hitchPanel = false;
+
+		// fire up the camera
+		$('body').css({ opacity: 0.5 });
+		startCamera();
+		$timeout(function() {
+			$('body').css({ opacity: 1 });
+		}, 100);
+	};
 
 
 	/******************************************************
@@ -76,24 +89,12 @@ angular.module('starter.controllers', [])
 		}, config.cameraPreview.camera, tapEnabled, dragEnabled, toBack);
 	};
 
-	$scope.initialize = function() {
+	initialize = function() {
 		// setup picture handler callback
 		cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
 			document.getElementById('originalPicture').src = result[0];
 		});
-
-		$('body').css({ opacity: 0.5 });
-		startCamera();
-		$timeout(function() {
-			$('body').css({ opacity: 1 });
-		}, 100);
 	};
-
-
-
-
-
-
 
 	/******************************************************
 		Touch
@@ -108,5 +109,11 @@ angular.module('starter.controllers', [])
 			// success
 		}, function () {});
 	};
-	
+
+	/******************************************************
+		Init!
+	******************************************************/
+	$ionicPlatform.ready(function () {
+		initialize();
+	});
 });

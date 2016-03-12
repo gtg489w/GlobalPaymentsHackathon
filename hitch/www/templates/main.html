@@ -1,8 +1,28 @@
 <div class="hitch-panel" ng-show="state.hitchPanel">
+	<div class="hitch-location"></div>
 	<div class="hitch-branding">
 		<h2>Powered By</h2>
 		<div class="logo"></div>
 	</div>
+	<div class="hitch-left">
+		<div class="hitch-profile"></div>
+		<div class="hitch-welcome-text">Welcome back, Brian!</div>
+	</div>
+	<div class="hitch-right">
+		<div class="hitch-yourorder">Your Order</div>
+		<div class="hitch-menu-item">
+			<div class="hitch-menu-item-title">Yogurt Parfait</div>
+			<div class="hitch-menu-item-price">$3.22</div>
+		</div>
+		<div class="hitch-menu-item">
+			<div class="hitch-menu-item-title">Grande Dirty Chai</div>
+			<div class="hitch-menu-item-price">$8.45</div>
+		</div>
+		<div class="hitch-menu-total">Total: $9.00</div>
+
+		<button class="hitch-checkout" ng-click="checkout()">Checkout</button>
+	</div>
+
 </div>
 
 
