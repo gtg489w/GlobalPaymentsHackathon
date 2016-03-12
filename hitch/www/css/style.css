@@ -111,6 +111,26 @@ html, body {
 
 
 
+.hitch-photo-mask {
+	position: absolute;
+	z-index: 2;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background: url(../img/face-mask.png) center center no-repeat;
+	background-size: cover;
+}
+#hitch-photo-taken {
+	position: absolute;
+	z-index: 5;
+	width: 50%;
+	height: 50%;
+	left: 0px;
+	top: 0px;
+}
+
+
 
 
 

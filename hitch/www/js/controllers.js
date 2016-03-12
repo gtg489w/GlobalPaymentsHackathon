@@ -62,7 +62,6 @@ angular.module('starter.controllers', [])
 
 		// fire up the camera
 		$('body').css({ opacity: 0.5 });
-		startCamera();
 		$timeout(function() {
 			$('body').css({ opacity: 1 });
 		}, 100);
@@ -73,7 +72,7 @@ angular.module('starter.controllers', [])
 		Camera
 	******************************************************/
 	$scope.takePicture = function() {
-		cordova.plugins.camerapreview.takePicture({maxWidth:640, maxHeight:640});
+		cordova.plugins.camerapreview.takePicture({ maxWidth:640, maxHeight:640 });
 	};
 
 	startCamera = function() {
@@ -90,11 +89,12 @@ angular.module('starter.controllers', [])
 	};
 
 	initialize = function() {
-		// setup picture handler callback
 		cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
-			document.getElementById('originalPicture').src = result[0];
+			window.alert(result[0]);
 		});
 	};
+
+	
 
 	/******************************************************
 		Touch
@@ -115,5 +115,6 @@ angular.module('starter.controllers', [])
 	******************************************************/
 	$ionicPlatform.ready(function () {
 		initialize();
+		startCamera();
 	});
 });
