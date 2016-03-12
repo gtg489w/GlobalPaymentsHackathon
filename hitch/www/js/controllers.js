@@ -26,11 +26,14 @@ angular.module('starter.controllers', [])
 	};
 	$scope.state = {
 		hitchPanel: false,
-		thumbPanel: true,
+		thumbPanel: false,
+		authorizingPanel: false,
+		successPanel: false,
 		distance: 1000,
 		devices: {},
 		location: true,
-		order: true
+		order: true,
+		facialError: false
 	};
 
 	/******************************************************
@@ -62,10 +65,14 @@ angular.module('starter.controllers', [])
 	******************************************************/
 	$scope.checkout = function() {
 		$scope.state.hitchPanel = false;
+		$timeout(function() {
+			$scope.authTouch();
+		}, 2000);
 	};
 
 	$scope.facialRecognition = function() {
 		$scope.state.thumbPanel = false;
+		$scope.state.facialError = false;
 
 		// fire up the camera
 		$('body').css({ opacity: 0.5 });
@@ -94,8 +101,17 @@ angular.module('starter.controllers', [])
 		}, config.cameraPreview.camera, tapEnabled, dragEnabled, toBack);
 	};
 
+	facialError = function() {
+		$scope.state.facialError = true;
+		$timeout(function() {
+			facialRecognition();
+		}, 5000);
+	};
+
 	initialize = function() {
 		cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
+			$scope.state.authorizingPanel = true;
+
 			var bucket = '2015gphackathon';
 			var options = {
 				params: {
@@ -126,19 +142,20 @@ angular.module('starter.controllers', [])
 						}
 					}
 				}).then(function(result) {
-					window.alert('boom');
-					window.alert(JSON.stringify(result));
+					if(result.statusText == 'OK') {
+						$scope.state.successPanel = true;
+					} else {
+						facialError();
+					}
+					// window.alert(JSON.stringify(result));
 				}, function(err) {
-					window.alert('fail' + JSON.stringify(err));
+					facialError();
+					// window.alert('fail' + JSON.stringify(err));
 				});
 			}, function(err) {
 				$ionicLoading.show({template : 'Upload Failed', duration: 3000});
 				window.alert('upload to s3 fail ' + JSON.stringify(err));
 			}, function(progress) {});
-
-
-
-
 		});
 	};
 
@@ -176,14 +193,9 @@ angular.module('starter.controllers', [])
 		Touch
 	******************************************************/
 	$scope.authTouch = function() {
-		$cordovaTouchID.checkSupport().then(function() {
-			window.alert('supported!');
-		}, function (error) {});
-
-		$cordovaTouchID.authenticate("text").then(function() {
-			window.alert('booya');
-			// success
-		}, function () {});
+		$cordovaTouchID.authenticate("Please authorize your payment with your fingerprint").then(function() {
+			$scope.state.thumbPanel = false;
+		}, $scope.authTouch);
 	};
 
 	/******************************************************

@@ -33,8 +33,27 @@
 </div>
 
 
+<div class="authorizing-panel" ng-show="state.authorizingPanel">
+	<div class="authorizing-loading" ng-show="!state.facialError">
+		<div class="spinner">
+			<div class="cube1"></div>
+			<div class="cube2"></div>
+		</div>
+	</div>
+	<div class="authorizing-text" ng-show="!state.facialError">Authorizing Payment</div>
+	<div class="authorizing-text" ng-show="state.facialError">Facial recognition error. Try Again.</div>
+</div>
+
+
+<div class="success-panel">
+	Success!
+</div>
+
+
 
 <div class="controls">
+	<div class="hitch-photo-mask-text1">Line up your face</div>
+	<div class="hitch-photo-mask-text2">And touch the screen to authorize</div>
 	<div class="hitch-photo-mask" ng-click="takePicture()"></div>
 </div>
 
