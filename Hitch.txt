@@ -1,0 +1,12 @@
+Hitch expedites the payment process by allowing vendors to process transactions with a customer simply providing their fingerprint or face for facial recognition processing.
+
+Vendors and distributors of Hitch can configure the level and number of authentication factors to find that balance between customer privacy and security.
+
+Hitch leverages Lambda Labs for facial recognition, Apple's Touch ID for a fingerprint reader, AWS for the API services, and Global Payments as the payment processor. Hitch comes with a kiosk tablet app and a companion mobile app.
+
+Features:
+•	Distributed system of components that enable hand-free mobile payments utilizing increased security via biometric ThumbPrint, Facial Recognition, and Proximity of registered device.
+•	Advanced Cloud architecture allows for near-unlimited horizontal scaling using a server-less micro-service architecture
+•	iPhone Application provides proximity awareness to the POS, and recent transaction history, and purchase confirmations
+•	iPad Application demonstrates POS terminal which recognizes when a Hitch user has approached.  Authorization can then be initiated via thumbprint scanner and camera
+•	Payment is submitted using securely stored payment details, all within the cloud and without the user ever having to get their wallet out.
