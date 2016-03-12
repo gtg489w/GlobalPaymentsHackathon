@@ -1,3 +1,6 @@
 {
-  "toggleLocation": "fafafa.txt"
+  "tender": {
+      "amount": "10.67",
+      "identity": "BRIAN"
+  }
 }
