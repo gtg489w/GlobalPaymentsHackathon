@@ -43,8 +43,27 @@ module.exports = {
     });
   },
   doTender: function(tender, context){
-      // TODO: Call Global Payments API with retrieved CC Information!
-      context.succeed("");
+      var s3 = new AWS.S3();
+      var param = {Bucket: '2015gphackathon', Key: 'tenders/' + tender.identity};
+      
+      s3.getObject(param, function (err, data) {
+        if (err){
+            context.fail('Error occurred retriving payment data');  
+        } else {
+            var url = data.Body.toString('ascii');
+            url = url.replace('AMOUNT_TO_BILL', tender.amount);
+            unirest.get(url)
+            .header("Accept", "application/xml")
+            .end(function (result) {
+                //console.log(result.status, result.headers, result.body);
+                if (result.status == 200){
+                    context.succeed(result.body);    
+                } else {
+                    context.succeed("Error processing payment: " + result.status);
+                } 
+            });
+        }
+    });
   }, 
   toggleLocation: function(toggleLocation, context){
     //console.log(JSON.stringify(event, null, 2));
