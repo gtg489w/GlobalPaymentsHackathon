@@ -45,8 +45,9 @@
 </div>
 
 
-<div class="success-panel">
-	Success!
+<div class="success-panel" ng-show="state.successPanel" ng-click="completeApp()">
+	<div class="success-icon"></div>
+	<div class="success-text">Success!<br />We've emailed you a receipt</div>
 </div>
 
 

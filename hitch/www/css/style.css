@@ -256,8 +256,24 @@ html, body {
 	color: #fff;
 	text-align: center;
 }
-
-
+.success-text {
+	position: absolute;
+	top: 400px;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	font-size: 40px;
+	line-height: 50px;
+	color:#6fc4c1;
+	font-weight: 300;
+}
+.success-icon {
+	width: 180px;
+	height: 180px;
+	background: url(../img/checkmark.png) center center no-repeat;
+	background-size: contain;
+	margin: 200px auto;
+}
 
 
 

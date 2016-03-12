@@ -25,14 +25,14 @@ angular.module('starter.controllers', [])
 		deviceID: '00A0C60077AD'
 	};
 	$scope.state = {
-		hitchPanel: false,
-		thumbPanel: false,
+		hitchPanel: true,
+		thumbPanel: true,
 		authorizingPanel: false,
 		successPanel: false,
 		distance: 1000,
 		devices: {},
-		location: true,
-		order: true,
+		location: false,
+		order: false,
 		facialError: false
 	};
 
@@ -73,6 +73,8 @@ angular.module('starter.controllers', [])
 	$scope.facialRecognition = function() {
 		$scope.state.thumbPanel = false;
 		$scope.state.facialError = false;
+		$scope.state.authorizingPanel = false;
+		$scope.state.successPanel = false;
 
 		// fire up the camera
 		$('body').css({ opacity: 0.5 });
@@ -104,7 +106,8 @@ angular.module('starter.controllers', [])
 	facialError = function() {
 		$scope.state.facialError = true;
 		$timeout(function() {
-			facialRecognition();
+			$scope.facialRecognition();
+			$scope.state.authorizingPanel = false;
 		}, 5000);
 	};
 
@@ -116,17 +119,11 @@ angular.module('starter.controllers', [])
 			var options = {
 				params: {
 					'key': 'uploads/test.jpg',
-					// "AWSAccessKeyId": data.awsKey,
-					// "acl": "private",
-					// "policy": data.policy,
-					// "signature": data.signature,
 					"Content-Type": "image/jpeg"
 				}
             };
 
 			$cordovaFileTransfer.upload("https://" + bucket + ".s3.amazonaws.com/", result[0], options).then(function(result) {
-				window.alert('upload to s3 succeed ' + JSON.stringify(result));
-				window.alert(result.headers.Location);
 				$http({
 					method: 'POST',
 					url: 'https://fg8ekf1vhl.execute-api.us-east-1.amazonaws.com/prod/facialRecognition',
@@ -144,6 +141,20 @@ angular.module('starter.controllers', [])
 				}).then(function(result) {
 					if(result.statusText == 'OK') {
 						$scope.state.successPanel = true;
+						$http({
+							method: 'POST',
+							url: 'https://fg8ekf1vhl.execute-api.us-east-1.amazonaws.com/prod/facialRecognition',
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json',
+								'x-api-key': 'KCyM96hBCC9vQGpQESk7o1I8HmWoYc6f7Qrhn9SL'
+							},
+							data: {
+								"toggleLocation": "receipt"
+							}
+						}).then(function(result) {
+							$scope.state.location = true;
+						}, function(err) {});
 					} else {
 						facialError();
 					}
@@ -153,8 +164,9 @@ angular.module('starter.controllers', [])
 					// window.alert('fail' + JSON.stringify(err));
 				});
 			}, function(err) {
-				$ionicLoading.show({template : 'Upload Failed', duration: 3000});
-				window.alert('upload to s3 fail ' + JSON.stringify(err));
+				//$ionicLoading.show({template : 'Upload Failed', duration: 3000});
+				//window.alert('upload to s3 fail ' + JSON.stringify(err));
+				facialError();
 			}, function(progress) {});
 		});
 	};
@@ -162,7 +174,7 @@ angular.module('starter.controllers', [])
 
 	/******************************************************
 		Location & Order Polling
-	******************************************************/	
+	******************************************************/
 	$interval(function() {
 		// location poll
 		$http({
@@ -179,7 +191,7 @@ angular.module('starter.controllers', [])
 		// order poll
 		$http({
 			method: 'HEAD',
-			url: 'https://s3.amazonaws.com/2015gphackathon/uploads/receipt',
+			url: 'https://s3.amazonaws.com/2015gphackathon/uploads/order',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
@@ -188,6 +200,48 @@ angular.module('starter.controllers', [])
 			$scope.state.order = true;
 		}, function(err) {});
 	}, 5000);
+
+
+	reset = function() {
+		$http({
+			method: 'DELETE',
+			url: 'https://s3.amazonaws.com/2015gphackathon/uploads/location',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(function(result) {
+			$http({
+				method: 'DELETE',
+				url: 'https://s3.amazonaws.com/2015gphackathon/uploads/order',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}
+			}).then(function(result) {
+				$http({
+					method: 'DELETE',
+					url: 'https://s3.amazonaws.com/2015gphackathon/uploads/receipt',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					}
+				}).then(function(result) {
+					$scope.state.hitchPanel = true;
+					$scope.state.thumbPanel = true;
+					$scope.state.authorizingPanel = false;
+					$scope.state.location = false;
+					$scope.state.order = false;
+					$scope.state.facialError = false;
+				}, function(err) {});
+			}, function(err) {});
+		}, function(err) {});
+	};
+
+	$scope.completeApp = function() {
+		reset();
+		$scope.state.successPanel = false;
+	};
 
 	/******************************************************
 		Touch
