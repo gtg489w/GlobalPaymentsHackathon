@@ -1,5 +1,6 @@
 .hitch-panel {
 	position: absolute;
+	z-index: 3;
 	top: 0px;
 	left: 0px;
 	right: 0px;
@@ -8,6 +9,35 @@
 	background: linear-gradient(135deg,  #24252a 0%,#283647 100%);
 	color: #fff;
 }
+.logo {
+	background-image: url(../img/logo.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.hitch-branding {
+	opacity: .6;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+}
+.hitch-branding h2 {
+	color: #fff;
+	font-weight: 200;
+	width: 180px;
+	text-align: center;
+}
+.hitch-branding .logo {
+	width: 180px;
+	height: 60px;
+}
+
+
+
+
+
+
+
 
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {
 	background: transparent;
