@@ -7,7 +7,14 @@ exports.handler = function(event, context) {
   }
   if (event.face) {
       // Function should call context.succeed
-      lib.getFacialRecogntion(event.face, context);
+      return lib.getFacialRecogntion(event.face, context);
   }
-  //return context.fail('No type provided!');
+  if (event.authorize) {
+      return lib.doAuthorization(event.authorize, context);
+  }
+  if (event.tender) {
+      return lib.doTender(event.tender, context);
+  }
+  
+  return context.fail('No type provided!');
 };

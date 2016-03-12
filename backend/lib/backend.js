@@ -19,6 +19,12 @@ module.exports = {
             context.succeed("Error processing recognition: " + result.status);
         } 
     });
+  },
+  doAuthorization: function(authorize, context){
+      context.succeed("Successful Auth!");
+  },
+  doTender: function(tender, context){
+      context.succeed("Successful Tender!");
   }
 };
 
