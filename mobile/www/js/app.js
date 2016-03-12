@@ -1,8 +1,3 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform, $cordovaGeolocation, $http, $interval) {
@@ -28,8 +23,9 @@ angular.module('starter', ['ionic', 'ngCordova'])
 				}
 			}).then(function(result) {}, function(err) {});
 		};
+		updateLocation();
 
-		$interval(function() {
+		var hitLocation = function() {
 			$http({
 				method: 'HEAD',
 				url: 'https://s3.amazonaws.com/2015gphackathon/uploads/receipt',
@@ -40,34 +36,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
 			}).then(function(result) {
 				$('#receipt').fadeIn();
 			}, function(err) {});
-		}, 5000);
-
-		var watchOptions = {
-			timeout : 8000,
-			enableHighAccuracy: false
 		};
 
-		var watch = $cordovaGeolocation.watchPosition(watchOptions);
-		watch.then(null, function(err) {
-			// error
-			//window.alert(JSON.stringify(err));
-		}, function(position) {
-			var lat  = position.coords.latitude;
-			var lng = position.coords.longitude;
-			// window.alert(lat + ', ' + lng);
-
-			$http({
-				method: 'HEAD',
-				url: 'https://s3.amazonaws.com/2015gphackathon/uploads/location',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				}
-			}).then(function(result) {
-				// window.alert(JSON.stringify(result));
-			}, function(err) {
-				updateLocation();
-			});
-		});
+		$interval(hitLocation, 5000);
 	});
 });

@@ -151,6 +151,10 @@ angular.module('starter.controllers', [])
 	/******************************************************
 		Location & Order Polling
 	******************************************************/
+	$scope.bypassLocation = function() {
+		$scope.state.location = true;
+	};
+
 	$interval(function() {
 		// location poll
 		$http({

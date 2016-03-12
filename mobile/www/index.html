@@ -19,7 +19,12 @@
 
     <ion-pane>
       <ion-content>
-      <div class="logo"></div>
+      <script>
+      function test() {
+        window.alert('test');
+      };
+      </script>
+      <div class="logo" on-click="test()"></div>
       <div class="receipts">
         <div class="receipt" style="display: none;" id="receipt">
           <div class="cost">$11.67</div>

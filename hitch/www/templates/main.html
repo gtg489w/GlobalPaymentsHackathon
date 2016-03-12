@@ -4,7 +4,7 @@
 		<h2>Powered By</h2>
 		<div class="logo" ng-click="completeApp()"></div>
 	</div>
-	<div class="hitch-left">
+	<div class="hitch-left" ng-click="bypassLocation()">
 		<div class="hitch-profile bubble" ng-class="{ 'bubble' : !state.location }"></div>
 		<div class="hitch-welcome-text bubble delay" ng-class="{ 'bubble' : !state.location }">Welcome back, Brian!</div>
 	</div>
@@ -12,13 +12,13 @@
 		<div class="hitch-yourorder">Your Order</div>
 		<div class="hitch-menu-item bubble" ng-class="{ 'bubble' : !state.order }">
 			<div class="hitch-menu-item-title">Yogurt Parfait</div>
-			<div class="hitch-menu-item-price">$3.22</div>
+			<div class="hitch-menu-item-price">$2.22</div>
 		</div>
 		<div class="hitch-menu-item bubble delay" ng-class="{ 'bubble' : !state.order }">
 			<div class="hitch-menu-item-title">Grande Dirty Chai</div>
 			<div class="hitch-menu-item-price">$8.45</div>
 		</div>
-		<div class="hitch-menu-total bubble delay4" ng-class="{ 'bubble' : !state.order }">Total: $11.67</div>
+		<div class="hitch-menu-total bubble delay4" ng-class="{ 'bubble' : !state.order }">Total: $10.67</div>
 
 		<button class="hitch-checkout bubble delay6" ng-click="checkout()" ng-class="{ 'bubble' : !state.order }">Checkout</button>
 	</div>
