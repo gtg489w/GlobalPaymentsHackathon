@@ -21,7 +21,23 @@ module.exports = {
     });
   },
   doAuthorization: function(authorize, context){
-      context.succeed("Successful Auth!");
+      unirest.post("https://lambda-face-recognition.p.mashape.com/recognize")
+        .header("X-Mashape-Key", config.apiKey)
+        .field("album", config.apiAlbum)
+        .field("albumkey", config.apiAlbumKey)    
+        .field("urls", authorize.key)
+    .end(function (result) {
+        //console.log(result.status, result.headers, result.body);
+        if (result.status == 200){
+            var bestMatch = result.body.photos[0].tags[0].uids[0].prediction;
+            if (bestMatch == authorize.identity)
+                context.succeed("Authorized");
+            else
+                context.done(JSON.stringify('Unauthorized: Unable to verify identity'));
+        } else {
+            context.done(JSON.stringify('Unauthorized: Unable to verify identity'));
+        } 
+    });
   },
   doTender: function(tender, context){
       context.succeed("Successful Tender!");
