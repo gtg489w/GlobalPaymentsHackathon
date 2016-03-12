@@ -62,10 +62,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
    //      $scope.state.location = true;
    //    }, function(err) {});
 
-   // });
-
-
-
-
+   });
   });
 })
