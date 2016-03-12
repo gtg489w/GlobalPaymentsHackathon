@@ -51,7 +51,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
 					'Content-Type': 'application/json'
 				}
 			}).then(function(result) {
-				window.alert('success');
 				// window.alert(JSON.stringify(result));
 			}, function(err) {
 				updateLocation();
