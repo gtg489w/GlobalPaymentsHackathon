@@ -1,5 +1,14 @@
-.pane {
+.hitch-panel {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
 	background: #24252a;
 	background: linear-gradient(135deg,  #24252a 0%,#283647 100%);
 	color: #fff;
+}
+
+[nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {
+	background: transparent;
 }

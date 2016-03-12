@@ -22,6 +22,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 		url: '/main',
 		templateUrl: 'templates/main.html',
 		controller: 'MainCtrl'
-	})
-	$urlRouterProvider.otherwise('/splash');
+	});
+	$urlRouterProvider.otherwise('/main');
 });

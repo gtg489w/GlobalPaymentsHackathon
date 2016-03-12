@@ -1,1 +1,37 @@
-here.
+<div class="hitch-panel" ng-show="state.hitchPanel">
+	Hitch!
+</div>
+
+
+
+<div class="controls">
+	<div class="block">
+		<button class="button button-positive" ng-click="initialize()">Start</button>
+	</div>
+
+	<div class="block">
+		<button class="button button-positive" ng-click="takePicture()">Take Picture</button>
+	</div>
+
+	<div style="color: #fff; position: absolute;">
+		<div>Range: {{ state.distance }}</div>
+		<div>Devices:</div>
+		<div ng-repeat="device in state.devices | orderBy: 'rssi'">
+			{{ device }}
+		</div>
+	</div>
+
+</div>
+<div class="pictures">
+	<p><img id="originalPicture" width="200" style="height: 200px; border: 1px solid #bbb;" /></p>
+</div>
+
+
+
+
+
+<style>
+.view-container, .pane {
+	background: transparent;
+}
+</style>
