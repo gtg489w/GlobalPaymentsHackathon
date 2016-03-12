@@ -1,0 +1,12 @@
+.pane {
+	background: #24252a;
+	background: linear-gradient(135deg,  #24252a 0%,#283647 100%);
+	color: #fff;
+}
+.logo {
+	background: url(../img/logo.png) center center no-repeat;
+	background-size: contain;
+	width: 200px;
+	height: 200px;
+	margin: 200px auto;
+}
