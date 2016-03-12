@@ -1,6 +1,3 @@
 {
-  "authorize": {
-      "key": "https://s3.amazonaws.com/2015gphackathon/basil2.jpg",
-      "identity": "SCOTT"
-  }
+  "toggleLocation": "fafafa.txt"
 }
