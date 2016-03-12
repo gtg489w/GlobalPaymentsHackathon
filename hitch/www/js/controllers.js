@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
 	// })
 	window.location = '#/main';
 })
-.controller('MainCtrl', function($window, $rootScope, $scope, $ionicPlatform, $cordovaTouchID, $cordovaNetwork, $timeout, $interval, $cordovaGeolocation) {
+.controller('MainCtrl', function($window, $rootScope, $scope, $http, $ionicPlatform, $cordovaTouchID, $cordovaNetwork, $cordovaFileTransfer, $timeout, $interval, $cordovaGeolocation) {
 
 	/******************************************************
 		Config
@@ -25,9 +25,12 @@ angular.module('starter.controllers', [])
 		deviceID: '00A0C60077AD'
 	};
 	$scope.state = {
-		hitchPanel: true,
+		hitchPanel: false,
+		thumbPanel: true,
 		distance: 1000,
-		devices: {}
+		devices: {},
+		location: true,
+		order: true
 	};
 
 	/******************************************************
@@ -59,6 +62,10 @@ angular.module('starter.controllers', [])
 	******************************************************/
 	$scope.checkout = function() {
 		$scope.state.hitchPanel = false;
+	};
+
+	$scope.facialRecognition = function() {
+		$scope.state.thumbPanel = false;
 
 		// fire up the camera
 		$('body').css({ opacity: 0.5 });
@@ -76,7 +83,6 @@ angular.module('starter.controllers', [])
 	};
 
 	startCamera = function() {
-		$scope.state.hitchPanel = false;
 		var tapEnabled = true;
 		var dragEnabled = true;
 		var toBack = true;
@@ -90,11 +96,81 @@ angular.module('starter.controllers', [])
 
 	initialize = function() {
 		cordova.plugins.camerapreview.setOnPictureTakenHandler(function(result){
-			window.alert(result[0]);
+			var bucket = '2015gphackathon';
+			var options = {
+				params: {
+					'key': 'uploads/test.jpg',
+					// "AWSAccessKeyId": data.awsKey,
+					// "acl": "private",
+					// "policy": data.policy,
+					// "signature": data.signature,
+					"Content-Type": "image/jpeg"
+				}
+            };
+
+			$cordovaFileTransfer.upload("https://" + bucket + ".s3.amazonaws.com/", result[0], options).then(function(result) {
+				window.alert('upload to s3 succeed ' + JSON.stringify(result));
+				window.alert(result.headers.Location);
+				$http({
+					method: 'POST',
+					url: 'https://fg8ekf1vhl.execute-api.us-east-1.amazonaws.com/prod/facialRecognition',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json',
+						'x-api-key': 'KCyM96hBCC9vQGpQESk7o1I8HmWoYc6f7Qrhn9SL'
+					},
+					data: {
+						"authorize": {
+							"key": "https://2015gphackathon.s3.amazonaws.com/uploads/test.jpg",
+							"identity": "BRIAN"
+						}
+					}
+				}).then(function(result) {
+					window.alert('boom');
+					window.alert(JSON.stringify(result));
+				}, function(err) {
+					window.alert('fail' + JSON.stringify(err));
+				});
+			}, function(err) {
+				$ionicLoading.show({template : 'Upload Failed', duration: 3000});
+				window.alert('upload to s3 fail ' + JSON.stringify(err));
+			}, function(progress) {});
+
+
+
+
 		});
 	};
 
-	
+
+	/******************************************************
+		Location & Order Polling
+	******************************************************/	
+	$interval(function() {
+		// location poll
+		$http({
+			method: 'HEAD',
+			url: 'https://s3.amazonaws.com/2015gphackathon/uploads/location',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(function(result) {
+			$scope.state.location = true;
+		}, function(err) {});
+
+		// order poll
+		$http({
+			method: 'HEAD',
+			url: 'https://s3.amazonaws.com/2015gphackathon/uploads/receipt',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then(function(result) {
+			$scope.state.order = true;
+		}, function(err) {});
+	}, 5000);
 
 	/******************************************************
 		Touch
