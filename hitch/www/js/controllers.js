@@ -201,7 +201,6 @@ angular.module('starter.controllers', [])
 		}, function(err) {});
 	}, 5000);
 
-
 	reset = function() {
 		$http({
 			method: 'DELETE',
