@@ -37,30 +37,6 @@ angular.module('starter.controllers', [])
 	};
 
 	/******************************************************
-		GPS
-	******************************************************/
-
-	// move this to the mobile app
-
-	// var watchOptions = {
-	// 	timeout : 3000,
-	// 	enableHighAccuracy: false
-	// };
-
-	// var watch = $cordovaGeolocation.watchPosition(watchOptions);
-	// watch.then(
-	// 	null,
-	// 	function(err) {
-	// 		// error
-	// 	},
-	// 	function(position) {
-	// 		var lat  = position.coords.latitude;
-	// 		var lng = position.coords.longitude;
-	// 		window.alert(lat + ', ' + lng);
-	// 	});
-
-
-	/******************************************************
 		Scope actions
 	******************************************************/
 	$scope.checkout = function() {

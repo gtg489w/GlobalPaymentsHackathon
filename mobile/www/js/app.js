@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
 
-.run(function($ionicPlatform, $cordovaGeolocation, $http) {
+.run(function($ionicPlatform, $cordovaGeolocation, $http, $interval) {
 	$ionicPlatform.ready(function() {
 		if(window.cordova && window.cordova.plugins.Keyboard) {
 			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -28,6 +28,19 @@ angular.module('starter', ['ionic', 'ngCordova'])
 				}
 			}).then(function(result) {}, function(err) {});
 		};
+
+		$interval(function() {
+			$http({
+				method: 'HEAD',
+				url: 'https://s3.amazonaws.com/2015gphackathon/uploads/receipt',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}
+			}).then(function(result) {
+				$('#receipt').fadeIn();
+			}, function(err) {});
+		}, 5000);
 
 		var watchOptions = {
 			timeout : 8000,

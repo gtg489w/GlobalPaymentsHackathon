@@ -10,3 +10,27 @@
 	height: 200px;
 	margin: 200px auto;
 }
+.receipts {
+	border-bottom: 1px solid rgba(255,255,255,.4);
+}
+.receipt {
+	padding: 20px;
+	border-top: 1px solid rgba(255,255,255,.4);
+}
+.location {
+	height: 60px;
+	width: 200px;
+	background: center center no-repeat;
+	background-size: contain;
+}
+.location1 {
+	background-image: url(../img/location.png);
+}
+.location2 {
+	background-image: url(../img/location2.png);
+}
+.cost {
+	float: right;
+	font-size: 32px;
+	margin-top: 22px;
+}
