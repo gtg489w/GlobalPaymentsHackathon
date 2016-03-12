@@ -1,0 +1,24 @@
+{
+  "name": "aws-lambda-starter",
+  "version": "0.1.0",
+  "description": "",
+  "private": true,
+  "main": "lambda.js",
+  "scripts": {
+    "build": "./build.sh",
+    "create": "./provisioning/awsCreate.sh facialRecognition",
+    "deploy": "./provisioning/awsUpdate.sh facialRecognition",
+    "invoke": "./provisioning/awsInvoke.sh facialRecognition",
+    "localInvoke": "node ./provisioning/localInvoke.js",
+    "test": "jasmine",
+    "test:watch": "watch jasmine ./"
+  },
+  "author": "Scott Hankinson",
+  "license": "Apache 2.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "proxyquire": "~1.7.2",
+    "unirest": "~0.4.2"
+  }
+}
