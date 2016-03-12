@@ -1,4 +1,5 @@
 var unirest = require('unirest');
+var config = require('../config');
 
 module.exports = {
   getMessage: function(type) {
@@ -6,13 +7,17 @@ module.exports = {
   },
   getFacialRecogntion: function(face, context){
     unirest.post("https://lambda-face-recognition.p.mashape.com/recognize")
-        .header("X-Mashape-Key", "")
-        .field("album", "COMBO")
-        .field("albumkey", "")    
-        .field("urls", "https://s3.amazonaws.com/2015gphackathon/scottTest.jpg")
+        .header("X-Mashape-Key", config.apiKey)
+        .field("album", config.apiAlbum)
+        .field("albumkey", config.apiAlbumKey)    
+        .field("urls", face)
     .end(function (result) {
-        console.log(result.status, result.headers, result.body);
-        context.succeed(result.body);
+        //console.log(result.status, result.headers, result.body);
+        if (result.status == 200){
+            context.succeed(result.body.photos[0].tags[0].uids);    
+        } else {
+            context.succeed("Error processing recognition: " + result.status);
+        } 
     });
   }
 };

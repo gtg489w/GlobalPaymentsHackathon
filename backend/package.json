@@ -13,7 +13,7 @@
     "test": "jasmine",
     "test:watch": "watch jasmine ./"
   },
-  "author": "Ryan Ray <ryan@ryanray.me>",
+  "author": "Scott Hankinson",
   "license": "Apache 2.0",
   "dependencies": {
   },
