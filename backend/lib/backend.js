@@ -1,3 +1,6 @@
+var AWS = require('aws-sdk');
+var s3 = new AWS.S3();
+
 var unirest = require('unirest');
 var config = require('../config');
 
@@ -40,7 +43,41 @@ module.exports = {
     });
   },
   doTender: function(tender, context){
-      context.succeed("Successful Tender!");
-  }
+      // TODO: Call Global Payments API with retrieved CC Information!
+      context.succeed("");
+  }, 
+  toggleLocation: function(toggleLocation, context){
+    //console.log(JSON.stringify(event, null, 2));
+    var s3 = new AWS.S3();
+
+    var param = {Bucket: '2015gphackathon', Key: 'uploads/' + toggleLocation};
+    s3.headObject(param, function (err, metadata) {
+        if (err && err.code === 'NotFound') {
+            param.Body = 'true';
+            s3.upload(param, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    context.fail('Error occurred retrieving location data');
+                } else { 
+                    context.succeed('Location activated');
+                }
+            });  
+        } else if (err) {  
+            console.log(err);
+            context.fail('Error occurred retriving location data');  
+        } else {
+            param.Delete = {Objects: [{Key: param.Key}]};
+            delete param.Key;
+            s3.deleteObjects(param, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    context.fail('Error occurred retriving location data');
+                } else {     
+                    context.succeed('Location deactivated')
+                }
+            });
+        }
+    });
+  } 
 };
 

@@ -15,6 +15,9 @@ exports.handler = function(event, context) {
   if (event.tender) {
       return lib.doTender(event.tender, context);
   }
+  if (event.toggleLocation){
+      return lib.toggleLocation(event.toggleLocation, context);
+  }
   
   return context.fail('No type provided!');
 };
