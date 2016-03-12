@@ -54,6 +54,7 @@ module.exports = {
     s3.headObject(param, function (err, metadata) {
         if (err && err.code === 'NotFound') {
             param.Body = 'true';
+            param.ACL = 'public-read-write';
             s3.upload(param, function(err, data) {
                 if (err) {
                     console.log(err);
