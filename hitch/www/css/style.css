@@ -63,12 +63,18 @@ html, body {
 	background-size: cover;
 	margin: auto;
 	border: 6px solid  #6fc4c1;
+	opacity: 1;
+	transform: scale(1);
+	transition: all .4s ease;
 }
 .hitch-welcome-text {
 	font-size: 30px;
 	margin-top: 30px;
 	color:#6fc4c1;
 	font-weight: 300;
+	opacity: 1;
+	transform: scale(1);
+	transition: all .4s ease;
 }
 .hitch-right {
 	position: absolute;
@@ -78,6 +84,9 @@ html, body {
 	height: 400px;
 	text-align: center;
 	font-size: 30px;
+	opacity: 1;
+	transform: scale(1);
+	transition: all .4s ease;
 }
 .hitch-menu-item {
 	background: rgba(255, 255, 255, 1);
@@ -88,6 +97,9 @@ html, body {
 	border-radius: 12px;
 	font-weight: 500;
 	font-size: 26px;
+	opacity: 1;
+	transform: scale(1);
+	transition: all .4s ease;
 }
 .hitch-menu-item-title {
 	float: left;
@@ -97,6 +109,9 @@ html, body {
 	font-weight: 500;
 	font-size: 26px;
 	text-align: right;
+	opacity: 1;
+	transform: scale(1);
+	transition: all .4s ease;
 }
 .hitch-checkout {
 	margin-top: 120px;
@@ -107,6 +122,9 @@ html, body {
 	background: #6fc4c1;
 	color: #fff;
 	font-size: 30px;
+	opacity: 1;
+	transform: scale(1);
+	transition: all .4s ease;
 }
 
 
@@ -287,6 +305,21 @@ html, body {
 
 
 
+
+
+.bubble {
+	transform: scale(.2);
+	opacity: 0;
+}
+.delay {
+	transition-delay: .4s;
+}
+.delay4 {
+	transition-delay: 1.2s;
+}
+.delay6 {
+	transition-delay: 1.8s;
+}
 
 
 .spinner {
